@@ -54,16 +54,19 @@ model Car {
 }
 
 model Rental {
-  id         String   @id @default(uuid())
-  user_id    String
-  car_id     String
-  start_date DateTime
-  end_date   DateTime
-  total      Decimal
-  created_at DateTime @default(now())
+  id String @id @default(uuid())
 
-  user User @relation(fields: [user_id], references: [id])
-  car  Car  @relation(fields: [car_id], references: [id])
+  start_date           DateTime
+  end_date             DateTime?
+  expected_return_date DateTime
+  total                Decimal?
+  isPaid               Boolean?  @default(false)
+  created_at           DateTime  @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  car     Car    @relation(fields: [car_id], references: [id])
+  user_id String
+  car_id  String
 
   @@map("rentals")
 }
