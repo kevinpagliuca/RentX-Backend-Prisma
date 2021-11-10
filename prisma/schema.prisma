@@ -70,3 +70,7 @@ model Rental {
 
   @@map("rentals")
 }
+
+// enum fuelType {
+//   'Gasolina' | 'Alcool' | 'Híbrido' | 'Flex' | 'Elétrico';
+// }

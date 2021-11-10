@@ -11,7 +11,7 @@ interface IRequest {
   brand: string;
   seats: number;
   max_velocity: number;
-  fuel_type: 'Gasolina' | 'Alcool' | 'Híbrido' | 'Flex';
+  fuel_type: 'Gasolina' | 'Alcool' | 'Híbrido' | 'Flex' | 'Elétrico';
   transmission_type: 'Manual' | 'Automático';
   horse_power: number;
   category_id: string;
