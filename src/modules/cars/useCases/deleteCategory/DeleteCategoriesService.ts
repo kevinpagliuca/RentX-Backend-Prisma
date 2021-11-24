@@ -3,6 +3,10 @@ import { prismaClient } from '@shared/prisma';
 
 class DeleteCategoryService {
   async execute(id: string) {
+    if (!id) {
+      throw new AppError('Category ID is required.', 401);
+    }
+
     const isCategoryExists = await prismaClient.category.findFirst({
       where: { id },
     });

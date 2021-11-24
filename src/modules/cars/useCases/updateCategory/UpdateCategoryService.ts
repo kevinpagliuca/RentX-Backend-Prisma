@@ -9,6 +9,10 @@ interface IRequest {
 
 class UpdateCategoryService {
   async execute({ id, name, description }: IRequest) {
+    if (!id) {
+      throw new AppError('Category ID is required.', 401);
+    }
+
     const isCategoryExists = await prismaClient.category.findFirst({
       where: { id },
     });

@@ -11,6 +11,10 @@ interface IRequest {
 
 class UpdateUserService {
   async execute({ id, name, username, email, driver_license }: IRequest) {
+    if (!id) {
+      throw new AppError('User ID is required.', 401);
+    }
+
     const userExists = await prismaClient.user.findFirst({
       where: { id },
     });
