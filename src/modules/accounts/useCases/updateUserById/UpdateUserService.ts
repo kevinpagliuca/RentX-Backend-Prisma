@@ -1,0 +1,61 @@
+import { AppError } from '@shared/errors/AppError';
+import { prismaClient } from '@shared/prisma';
+
+interface IRequest {
+  id: string;
+  name: string;
+  username: string;
+  email: string;
+  driver_license: string;
+  is_admin: boolean;
+}
+
+class UpdateUserService {
+  async execute({
+    id,
+    name,
+    username,
+    email,
+    driver_license,
+    is_admin,
+  }: IRequest) {
+    const userExists = await prismaClient.user.findFirst({
+      where: { id },
+    });
+
+    if (!userExists) {
+      throw new AppError('User not found', 404);
+    }
+
+    const emailExists = await prismaClient.user.findFirst({
+      where: { email },
+    });
+
+    if (emailExists.id !== id) {
+      throw new AppError('E-mail already taken', 401);
+    }
+
+    const user = await prismaClient.user.update({
+      where: {
+        id,
+      },
+      data: {
+        email,
+        driver_license,
+        name,
+        username,
+        is_admin,
+      },
+    });
+
+    delete user.password;
+
+    if (!user.is_admin) {
+      delete user.is_admin;
+    }
+
+    return user;
+  }
+}
+
+export default new UpdateUserService();

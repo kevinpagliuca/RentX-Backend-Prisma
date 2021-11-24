@@ -13,7 +13,7 @@ interface IRequest {
   max_velocity: number;
   fuel_type: 'Gasolina' | 'Alcool' | 'Híbrido' | 'Flex' | 'Elétrico';
   transmission_type: 'Manual' | 'Automático';
-  horse_power: number;
+  horse_power?: number;
   category_id: string;
   id?: string;
 }
@@ -46,14 +46,14 @@ class CreateCarService {
         name,
         brand,
         description,
-        daily_rate,
-        fine_amount,
+        daily_rate: Number(daily_rate),
+        fine_amount: Number(fine_amount),
         license_plate,
         category_id,
         fuel_type,
         horse_power,
         max_velocity,
-        seats,
+        seats: Number(seats),
         transmission_type,
       },
     });
